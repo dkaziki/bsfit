@@ -31,11 +31,24 @@ function [a,d,err,err_all,bsmodel]=bsfit(bs,n,para)
 % defaults: 
 alpha=.01; % starting value for regularation of LM procedure
 kmax=50; %maximum number of iterations 
-kmin=8; % minimum number of iterations 
+kmin=8; % minimum number of iterations
+if nargin>2
+  if isfield(para,'kmin')
+        kmin=para.kmin;
+  end
+  if isfield(para,'kmax')
+        kmax=para.kmax;
+  end
+  if isfield(para,'alpha')
+        alpha=para.alpha;
+  end
+end
+
 a=[];  %starting value for mixing matrix. If empty, it is estimated from bs
 errtol=10^(-6); % programs stops if error decreases by less than this value 
                 % within the last two iterations. Only calculated after 7
-                % iterations. (For bad starting values 
+                % iterations. (For bad starting values)
+
                
 
 [nchan,nchan,nchan]=size(bs);
@@ -85,7 +98,7 @@ while kont==1;
      err_all(k+1)=err;
      if k==kmax;kont=0;end
      if k>kmin-1;
-         diff_err=err_all(k-1)-err_all(k+1);
+         diff_err=err_all(k-3)-err_all(k+1);
          if diff_err<errtol;kont=0;end
      end
      bs_est=calc_bsmodel(a,d);
