@@ -14,7 +14,7 @@ cfg.path_meth = '/path/to/meth';
 cfg.path_bsfit = '/path/to/bsfit';
 
 
-% Path to real EEG dataset (NOT included in this repository)
+% Path to real EEG dataset (Included in this repository - data_single.mat)
 cfg.path_realdata = '/path/to/data_export';
 
 
